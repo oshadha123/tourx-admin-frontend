@@ -15,7 +15,7 @@ export default function Navigation() {
         expand="lg"
         style={{
           marginBottom: 10,
-          backgroundColor: "#fdd037",
+          backgroundColor: "#fcec52",
           alignItems: "end",
         }}
       >
