@@ -117,9 +117,6 @@ export default function Dashboard() {
 
   return (
     <div className="App">
-      {/* <p>{api.apiResponse}</p> */}
-      <Navigation />
-
       <div className="d-flex flex-row mb-3">
         <div style={{ textAlign: "center" }} className="p-2">
           <Card style={{ margin: 10 }}>
@@ -132,7 +129,9 @@ export default function Dashboard() {
                 <Card.Title>Created tours:</Card.Title>
                 <h2>30</h2>
               </div>
-              <Button variant="primary">Go to Tours</Button>
+              <a href="">
+                <Button variant="primary">Go to Tours</Button>
+              </a>
             </Card.Body>
           </Card>
 

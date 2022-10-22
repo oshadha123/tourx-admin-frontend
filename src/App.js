@@ -1,50 +1,51 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Dashboard from "./screens/Dashboard";
-import LoginForm from './screens/Login';
+// import LoginForm from './screens/Login';
+// import Rules from './screens/Rules';
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import Navigation from "./components/Navigation";
 
-export default function App(){
+export default function App() {
   const adminUser = {
     email: "admin@admin.com",
-    password: "admin123"
-  }
+    password: "admin123",
+  };
 
-  const[user, setUser] = useState({name:"", email:""});
+  const [user, setUser] = useState({ name: "", email: "" });
   const [error, setError] = useState("");
 
-  const Login = details => {
+  const Login = (details) => {
     console.log(details);
 
-    if (details.email == adminUser.email && details.password ==adminUser.password){
+    if (
+      details.email == adminUser.email &&
+      details.password == adminUser.password
+    ) {
       console.log("logged in");
       setUser({
         name: details.name,
-        email: details.email
+        email: details.email,
       });
-    } else{
+    } else {
       console.log("Details do not match!");
       setError("Details do not match!");
     }
-  }
+  };
 
   const Logout = () => {
-    setUser({name:"", email:""});
-  }
-  return(
+    setUser({ name: "", email: "" });
+  };
+  return (
     <>
-    
-    {/* <Dashboard /> */}
-    
-    <div className="App">
-      {(user.email != "") ? (
-        <div className="welcome">
-          <h2>Welcome, <span>{user.name}</span></h2>
-          <button onClick={Logout}>Logout</button>
-        </div>
-      ) : (
-        <LoginForm Login={Login} error={error} />
-      )}
-    </div>
-    
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          <Route exact path="/" component={Dashboard} />
+          {/* <Route path="/path contact" element={Login} />
+          <Route path="/path about" element={Rules} /> */}
+        </Routes>
+      </BrowserRouter>
+      <Dashboard />
     </>
   );
 }
