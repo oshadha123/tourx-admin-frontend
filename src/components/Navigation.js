@@ -29,6 +29,7 @@ export default function Navigation() {
               }
               style={{ maxHeight: "5rem", maxWidth: "8rem" }}
             />
+
           </NavbarBrand>
         </LinkContainer>
         
