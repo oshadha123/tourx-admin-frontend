@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Card } from "react-bootstrap";
+import { AuthContext } from "../context/AuthContext";
 // import GoogleLogin from "react-google-login";
 import '../styles.css';
 
@@ -11,6 +12,8 @@ function LoginForm({ Login, error }) {
     e.preventDefault();
     Login(details);
   };
+
+  const {login,comp}=useContext(AuthContext);
 
   const styles = {
     container: {
