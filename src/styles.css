@@ -1,3 +1,11 @@
 * {
     font-family: roboto;
   }
+
+:root{
+  --primary:#1768AC;
+  --secondary:#ADE25D;
+  --warning:#E26D5C;
+  --light-blue:#06BEE1;
+  --yellow:#FCEC52;
+}
