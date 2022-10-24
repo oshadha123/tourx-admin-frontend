@@ -26,7 +26,6 @@ export default function Rules() {
   return (
     <>
       <div className="App">
-        <Navigation />
         <Container
           id="left-tabs-example"
           defaultActiveKey="first"
