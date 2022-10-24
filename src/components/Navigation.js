@@ -31,30 +31,39 @@ export default function Navigation() {
             />
           </NavbarBrand>
         </LinkContainer>
-        
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="">
-              <Nav.Link href="#tours">Tours</Nav.Link>
+            <LinkContainer to="/Tours">
+              <Nav.Link>Tours</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="">
-              <Nav.Link href="#rules">Rules</Nav.Link>
+            <LinkContainer to="/Rules">
+              <Nav.Link>Rules</Nav.Link>
             </LinkContainer>
             <NavDropdown
               title="Profile"
               id="basic-nav-dropdown"
               style={{ justifyContent: "right" }}
             >
-              <NavDropdown.Item href="#profile">
-                <PersonIcon /> Profile
+              <NavDropdown.Item>
+                <LinkContainer to="/Profile">
+                  <Nav.Link>
+                    <PersonIcon />
+                    Profile
+                  </Nav.Link>
+                </LinkContainer>
               </NavDropdown.Item>
-              <NavDropdown.Item href="#settings">
-                <SettingsIcon />
-                Settings
+              <NavDropdown.Item>
+                <LinkContainer to="/Settings">
+                  <Nav.Link>
+                    <SettingsIcon />
+                    Settings
+                  </Nav.Link>
+                </LinkContainer>
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#logout">

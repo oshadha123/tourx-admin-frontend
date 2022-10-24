@@ -21,31 +21,32 @@ const data ={
         {
             id:4,
             img: "https://res.cloudinary.com/tourx/image/upload/v1662643896/summer-camp-in-the-forest-landcape-background-free-vector_kxzuxz.jpg",
-            title: 'Venodi',
+            title: 'Weligama Surfing',
+            tour_guide: 'Hiruni Dahanayake',
         },
         {
-            id:1,
+            id:5,
             img: "https://res.cloudinary.com/tourx/image/upload/v1662643896/summer-camp-in-the-forest-landcape-background-free-vector_kxzuxz.jpg",
-            title: 'Ella Bonfire',
-            tour_guide: 'Venodi Widanagamage',
+            title: 'Trinco Blu',
+            tour_guide: 'Kaveeshya',
         },
         {
-            id:2,
+            id:6,
             img: "https://res.cloudinary.com/tourx/image/upload/v1662643896/summer-camp-in-the-forest-landcape-background-free-vector_kxzuxz.jpg",
-            title: 'Captain Oshadha',
+            title: 'Roadtrip to Downsouth',
             tour_guide: 'Oshadha Marasinghe',
         },
         {
-            id:3,
+            id:7,
             img: "https://res.cloudinary.com/tourx/image/upload/v1662643896/summer-camp-in-the-forest-landcape-background-free-vector_kxzuxz.jpg",
-            title: 'Dakunu Rate Akila',
-            tour_guide: 'Akila ',
+            title: 'Train trip to Jaffna',
+            tour_guide: 'Akila Ranasinghe',
         },
         {
-            id:4,
+            id:8,
             img: "https://res.cloudinary.com/tourx/image/upload/v1662643896/summer-camp-in-the-forest-landcape-background-free-vector_kxzuxz.jpg",
-            title: 'Ahinsaka Naween',
-            tour_guide: 'Naween ',
+            title: 'Colombo to Anuradhapura',
+            tour_guide: 'Naween Pasindu',
         }
     ]
 }
