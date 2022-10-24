@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Card } from "react-bootstrap";
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login";
 import '../styles.css';
 
 function LoginForm({ Login, error }) {
@@ -95,19 +95,13 @@ function LoginForm({ Login, error }) {
                 Login
               </Button>
 
-              <div style={{ textAlign: "center" }}>
+              {/* <div style={{ textAlign: "center" }}>
                 <GoogleLogin
                   className="rounded-box"
                   clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                   buttonText="Login with Google"
-                  // onSuccess={this.responseGoogle}
-                  // onFailure={this.responseGoogle}
-
-                  //   onSuccess={handleLogin}
-                  //   onFailure={handleFailure}
-                  //   cookiePolicy={'single_host_origin'}
                 ></GoogleLogin>
-              </div>
+              </div> */}
             </Form>
           </Card>
         </div>
