@@ -1,19 +1,53 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Card } from "react-bootstrap";
-import { AuthContext } from "../context/AuthContext";
+import AuthContext from "../context/AuthContext";
 // import GoogleLogin from "react-google-login";
-import '../styles.css';
+import { BASE_URL } from "../config";
+import axios from "axios";
+import "../styles.css";
 
-function LoginForm({ Login, error }) {
-  const [details, setDetails] = useState({ name: "", email: "", password: "" });
-  const submitHandler = (e) => {
+function LoginForm() {
+  const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
+  const userRef = useRef();
+  const errRef = useRef();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
+  useEffect(() => {
+    setErrMsg("");
+  }, [email, password]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    Login(details);
+    axios
+      .post(`${BASE_URL}/login`, { email, password })
+      .then(async (res) => {
+        localStorage.setItem("token", res.data.token);
+        navigate("/Dashboard");
+        console.log(res);
+      })
+      .catch((err) => {
+        // err => console.log (err)
+        if (!err?.response) {
+          setErrMsg("No Server Response");
+        } else if (err.response?.status === 400) {
+          setErrMsg("Missing Username or Password");
+        } else if (err.response?.status === 401) {
+          setErrMsg("Unauthorized");
+        } else {
+          setErrMsg("Login Failed");
+        }
+        errRef.current.focus();
+      });
   };
-
-  const {login,comp}=useContext(AuthContext);
 
   const styles = {
     container: {
@@ -39,76 +73,90 @@ function LoginForm({ Login, error }) {
 
   return (
     <>
-      <div style={styles.container}>
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "25rem",
-          }}
-        >
-          <Card style={cardStyles.container}>
-            <img
-              src={
-                "https://res.cloudinary.com/tourx/image/upload/v1662298253/tourx_equkdk.png"
-              }
-              style={{ height: "auto", width: "10rem" }}
-              alt="Logo"
-            />
-            <Form onSubmit={submitHandler}>
-              <h4 style={{ textAlign: "center" }}>Login</h4>
-              {error != "" ? <div className="error">{error}</div> : ""}
-
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label htmlFor="email">Email:</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  id="email"
-                  onChange={(e) =>
-                    setDetails({ ...details, email: e.target.value })
+      {success ? (
+        <section>
+          <h1>You are logged in!</h1>
+          <br />
+          <p>{/* <a href="#">Go to Home</a> */}</p>
+        </section>
+      ) : (
+        <section>
+          <Form.Text
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </Form.Text>
+          <div style={styles.container}>
+            <div
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "25rem",
+              }}
+            >
+              <Card style={cardStyles.container}>
+                <img
+                  src={
+                    "https://res.cloudinary.com/tourx/image/upload/v1662298253/tourx_equkdk.png"
                   }
-                  value={details.email}
+                  style={{ height: "auto", width: "10rem" }}
+                  alt="Logo"
                 />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
+                <Form onSubmit={handleSubmit}>
+                  <h4 style={{ textAlign: "center" }}>Login</h4>
+                  {/* {error != "" ? <div className="error">{error}</div> : ""} */}
 
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label htmlFor="password">Password:</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  id="password"
-                  onChange={(e) =>
-                    setDetails({ ...details, password: e.target.value })
-                  }
-                  value={details.password}
-                />
-              </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label htmlFor="email">Email:</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      id="email"
+                      ref={userRef}
+                      autoComplete="off"
+                      onChange={(e) => setEmail(e.target.value)}
+                      value={email}
+                      required
+                    />
+                  </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Remember Me" />
-              </Form.Group>
+                  <Form.Group className="mb-3" >
+                    <Form.Label htmlFor="password">Password:</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      id="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
+                      required
+                    />
+                  </Form.Group>
 
-              <Button className="mb-3" variant="primary" type="submit">
-                Login
-              </Button>
+                  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Check type="checkbox" label="Remember Me" />
+                  </Form.Group> */}
 
-              {/* <div style={{ textAlign: "center" }}>
+                  <Button className="mb-3" variant="primary" type="submit">
+                    Login
+                  </Button>
+
+                  {/* <div style={{ textAlign: "center" }}>
                 <GoogleLogin
                   className="rounded-box"
                   clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                   buttonText="Login with Google"
                 ></GoogleLogin>
               </div> */}
-            </Form>
-          </Card>
-        </div>
-      </div>
+                </Form>
+              </Card>
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }
