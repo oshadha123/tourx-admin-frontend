@@ -5,6 +5,7 @@ import TourManagement from './screens/TourManagement';
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
 // import LoginForm from './screens/Login';
+import UserManagement from "./screens/UserManagement";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Navigation from "./components/Navigation";
 
@@ -44,11 +45,10 @@ export default function App() {
         <Navigation />
         <Routes>
           <Route exact path="/" element={<Dashboard/>} />
-          {/* <Route path="/path contact" element={Login} /> */}
-          <Route path="/Tours" element={<TourManagement/>} />
+          <Route path="/TourManagement" element={<TourManagement/>} />
           <Route path="/Rules" element={<Rules/>} />
           <Route path="/Profile" element={<Profile/>} />
-          <Route path="/Settings" element={<Settings/>} />
+          <Route path="/UserManagement" element={<UserManagement/>} />
         </Routes>
       </BrowserRouter>
     </>

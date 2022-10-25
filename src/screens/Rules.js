@@ -1,56 +1,51 @@
 import React, { useState } from "react";
 import "../styles.css";
-import {
-  Container,
-  Col,
-  Row,
-  Tab,
-  Card,
-  Button,
-  Nav,
-  NavLink,
-  NavItem,
-  TabContent,
-  TabPane,
-} from "react-bootstrap";
 import Navigation from "../components/Navigation";
+import Col from "react-bootstrap/Col";
+import Nav from "react-bootstrap/Nav";
+import Row from "react-bootstrap/Row";
+import Tab from "react-bootstrap/Tab";
+import Button from "react-bootstrap/Button";
 
 const tours = [
-  { id: 1, name: "tour1", location: "Kandy", route: "route" },
-  { id: 2, name: "tour2", location: "Colombo", route: "route" },
-  { id: 3, name: "tour3", location: "Anuradhapura", route: "route" },
-  { id: 4, name: "tour4", location: "Galle", route: "route" },
+  {
+    id: 1,
+    name: "Seasons rule",
+    start: "2022-08-09",
+    end: "2022-11-01",
+  },
+  {
+    id: 2,
+    name: "Premium price",
+    start: "2022-06-01",
+    end: "2023-01-01",
+  },
 ];
 
 export default function Rules() {
   return (
-    <>
-      <div className="App">
-        <Container
-          id="left-tabs-example"
-          defaultActiveKey="first"
-          className="mt-5"
-        >
-          <Row>
-            <Col sm={3}>
-              <Nav variant="pills" className="flex-column">
-                {tours.map((e) => (
-                  <NavItem>
-                    <NavLink eventKey={e.id}>{e.name}</NavLink>
-                  </NavItem>
-                ))}
-              </Nav>
-            </Col>
-            <Col sm={9} style={{ border: "1px solid black" }}>
-              <TabContent>
-                {tours.map((item) => {
-                  return <TabPane eventKey="1">{item.name}</TabPane>;
-                })}
-              </TabContent>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    </>
+    <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+      <Row>
+        <Col sm={3}>
+          <Nav variant="pills" className="flex-column">
+            {tours.map((tour) => (
+              <Nav.Item>
+                <Nav.Link eventKey={tour.id}>{tour.name}</Nav.Link>
+              </Nav.Item>
+            ))}
+          </Nav>
+        </Col>
+        <Col sm={9}>
+          <Tab.Content>
+            <Tab.Pane eventKey="1">
+              <p>{tours[0].name}</p>
+              <p>{tours[0].start}</p>
+              <p>{tours[0].end}</p>
+<Button>Edit</Button>
+            </Tab.Pane>
+          </Tab.Content>
+        </Col>
+      </Row>
+    </Tab.Container>
   );
 }

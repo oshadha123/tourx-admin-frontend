@@ -152,7 +152,7 @@ export default function Dashboard() {
                   <Card.Title>Reported Users:</Card.Title>
                   <h2>4</h2>
                 </div>
-                <Button variant="danger">Go to Rule Management</Button>
+                <a href="./UserManagement"><Button variant="danger">Go to User Management</Button></a>
               </Card.Body>
             </Card>
           </div>
