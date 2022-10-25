@@ -38,11 +38,14 @@ export default function Navigation() {
             <LinkContainer to="/Dashboard">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/Tours">
+            <LinkContainer to="/TourManagement">
               <Nav.Link>Tours</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/Rules">
               <Nav.Link>Rules</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/UserManagement">
+              <Nav.Link>Users</Nav.Link>
             </LinkContainer>
             <NavDropdown
               title="Profile"
@@ -57,14 +60,14 @@ export default function Navigation() {
                   </Nav.Link>
                 </LinkContainer>
               </NavDropdown.Item>
-              <NavDropdown.Item>
+              {/* <NavDropdown.Item>
                 <LinkContainer to="/Settings">
                   <Nav.Link>
                     <SettingsIcon />
                     Settings
                   </Nav.Link>
                 </LinkContainer>
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
               <NavDropdown.Divider />
               <NavDropdown.Item href="#logout">
                 <ExitToAppIcon /> Log Out

@@ -162,21 +162,22 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="d-flex flex-row mb-3">
-        <div className="p-2" style={{ textAlign: "center" }}>
-          <Card style={{ width: "18rem", margin: 10 }}>
-            <Card.Body>
-              <div>
-                <Card.Title>Reported Users:</Card.Title>
-                <h2>4</h2>
-              </div>
-              <Button variant="danger">Go to Rule Management</Button>
-            </Card.Body>
-          </Card>
-        </div>
-        <div style={{ width: "20rem" }} className="p-2">
-          <h3 style={{ textAlign: "center" }}>User Composition</h3>
-          <Composition chartData={newRegData} />
+        <div className="d-flex flex-row mb-3">
+          <div className="p-2" style={{ textAlign: "center" }}>
+            <Card style={{ width: "18rem", margin: 10 }}>
+              <Card.Body>
+                <div>
+                  <Card.Title>Reported Users:</Card.Title>
+                  <h2>4</h2>
+                </div>
+                <a href="./UserManagement"><Button variant="danger">Go to User Management</Button></a>
+              </Card.Body>
+            </Card>
+          </div>
+          <div style={{ width: "20rem" }} className="p-2">
+            <h3 style={{ textAlign: "center" }}>User Composition</h3>
+            <Composition chartData={newRegData} />
+          </div>
         </div>
       </div>
     </div>
