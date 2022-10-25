@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useState } from "react";
 import "../styles.css";
 import Card from "react-bootstrap/Card";
@@ -7,6 +7,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Registrations from "../components/Registrations";
 import Composition from "../components/UserComposition";
 import UserType from "../components/AccountType";
+import Navigation from "../components/Navigation";
 import axios from "axios";
 import { BASE_URL } from ".././config";
 
@@ -59,6 +60,24 @@ const TypeData = [
 ];
 
 export default function Dashboard() {
+  const [touristNum, setTouristNum] = useState();
+  const [tourguideNum, setTourguideNum] = useState();
+  const token = {
+    headers: {
+      authorization: "Bearer " + localStorage.getItem("token")
+    },
+  };
+  axios
+    .get(`${BASE_URL}/stats/userRegistration`, token)
+    .then((details) => {
+      console.log(details);
+      setTouristNum(details.data.data.tourist.length);
+      setTourguideNum(details.data.data.tourguide.length);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
   const [userData, setUserData] = useState({
     labels: UserData.map((data) => data.date),
     datasets: [
@@ -75,16 +94,16 @@ export default function Dashboard() {
     ],
   });
 
-  const [regData, setReg] = useState({
-    labels: RegData.map((data) => data.type),
+  const newRegData = {
+    labels:["Tourists", "Tour Guides"],
     datasets: [
       {
         label: ["Tourists", "Tour Guides"],
-        data: RegData.map((data) => data.num),
+        data: [touristNum, tourguideNum],
         backgroundColor: ["#1768AC", "#ADE25D"],
       },
     ],
-  });
+  }
 
   const [typeData, setType] = useState({
     labels: TypeData.map((data) => data.type),
@@ -97,52 +116,51 @@ export default function Dashboard() {
     ],
   });
 
-  
   return (
-    
-      <div className="App">
-        <div className="d-flex flex-row mb-3">
-          <div style={{ textAlign: "center" }} className="p-2">
-            <Card style={{ margin: 10 }}>
-              <Card.Body>
-                <div>
-                  <Card.Title>Pending tours:</Card.Title>
-                  <h2>16</h2>
-                </div>
-                <div>
-                  <Card.Title>Created tours:</Card.Title>
-                  <h2>30</h2>
-                </div>
-                <a href="">
-                  <Button variant="primary">Go to Tours</Button>
-                </a>
-              </Card.Body>
-            </Card>
+    <div className="App">
+      <Navigation />
+      <div className="d-flex flex-row mb-3">
+        <div style={{ textAlign: "center" }} className="p-2">
+          <Card style={{ margin: 10 }}>
+            <Card.Body>
+              <div>
+                <Card.Title>Pending tours:</Card.Title>
+                <h2>16</h2>
+              </div>
+              <div>
+                <Card.Title>Created tours:</Card.Title>
+                <h2>30</h2>
+              </div>
+              <a href="">
+                <Button variant="primary">Go to Tours</Button>
+              </a>
+            </Card.Body>
+          </Card>
 
-            <Card style={{ width: "18rem", margin: 10 }}>
-              <Card.Body>
-                <div style={{ textAlign: "center" }}>
-                  <Card.Title>
-                    Virtual tour to site visitation conversion rate:{" "}
-                  </Card.Title>
-                  <h2>
-                    38% <ArrowUpwardIcon style={{ color: "#a4eb34" }} />
-                  </h2>
-                </div>
-              </Card.Body>
-            </Card>
-          </div>
-
-          <div className="p-2">
-            <h3 style={{ textAlign: "center" }}>Tour Guide Account Types</h3>
-            <UserType chartData={typeData} />
-          </div>
-
-          <div style={{ width: "40rem" }} className="p-2">
-            <h3 style={{ textAlign: "center" }}>Daily Registrations</h3>
-            <Registrations chartData={userData} />
-          </div>
+          <Card style={{ width: "18rem", margin: 10 }}>
+            <Card.Body>
+              <div style={{ textAlign: "center" }}>
+                <Card.Title>
+                  Virtual tour to site visitation conversion rate:{" "}
+                </Card.Title>
+                <h2>
+                  38% <ArrowUpwardIcon style={{ color: "#a4eb34" }} />
+                </h2>
+              </div>
+            </Card.Body>
+          </Card>
         </div>
+
+        <div className="p-2">
+          <h3 style={{ textAlign: "center" }}>Tour Guide Account Types</h3>
+          <UserType chartData={typeData} />
+        </div>
+
+        <div style={{ width: "40rem" }} className="p-2">
+          <h3 style={{ textAlign: "center" }}>Daily Registrations</h3>
+          <Registrations chartData={userData} />
+        </div>
+      </div>
 
         <div className="d-flex flex-row mb-3">
           <div className="p-2" style={{ textAlign: "center" }}>
@@ -158,9 +176,10 @@ export default function Dashboard() {
           </div>
           <div style={{ width: "20rem" }} className="p-2">
             <h3 style={{ textAlign: "center" }}>User Composition</h3>
-            <Composition chartData={regData} />
+            <Composition chartData={newRegData} />
           </div>
         </div>
       </div>
+    </div>
   );
 }
