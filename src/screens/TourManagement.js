@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import data from "./TourData";
 import { Avatar } from "@mui/material";
 import Modal from "react-bootstrap/Modal";
+import Navigation from "../components/Navigation";
 
 // function MyVerticallyCenteredModal(props) {
 //   return (
@@ -67,6 +68,7 @@ function TourManagement() {
   var count = 0;
   return (
     <>
+    <Navigation/>
       <section className="py-4 container">
         <div className="row justify-content-center">
           <div className="col-12 mb-0">
