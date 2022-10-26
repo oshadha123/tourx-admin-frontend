@@ -9,40 +9,20 @@ import { Avatar } from "@mui/material";
 import Modal from "react-bootstrap/Modal";
 import Navigation from "../components/Navigation";
 
-// function MyVerticallyCenteredModal(props) {
-//   return (
-//     <Modal
-//       {...props}
-//       size="lg"
-//       aria-labelledby="contained-modal-title-vcenter"
-//       centered
-//     >
-//       <Modal.Header closeButton>
-//         <Modal.Title id="contained-modal-title-vcenter">
-//           Tour Details
-//         </Modal.Title>
-//       </Modal.Header>
-//       <Modal.Body>
-//         <h4>Centered Modal</h4>
-//         <p>
-//           Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-//           dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-//           consectetur ac, vestibulum at eros.
-//         </p>
-//       </Modal.Body>
-//       <Modal.Footer>
-//         <Button variant="success" onClick={props.onHide}>
-//           Accept
-//         </Button>
-//         <Button variant="danger" onClick={props.onHide}>
-//           Reject
-//         </Button>
-//       </Modal.Footer>
-//     </Modal>
-//   );
-// }
-
 function TourManagement() {
+
+  axios
+  .get(`${BASE_URL}/stats/userRegistration`, token)
+  .then((details) => {
+    console.log(details);
+    setTouristNum(details.data.data.tourist.length);
+    setTourguideNum(details.data.data.tourguide.length);
+  })
+  .catch((e) => {
+    console.log(e);
+  });  
+  
+
   // const [modalShow, setModalShow] = React.useState(false);
 
   const [show, setShow] = useState(false);
