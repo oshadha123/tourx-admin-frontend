@@ -91,7 +91,7 @@ export default function Profile() {
 
   const styles = {
     container: {
-      backgroundImage: `url(${"https://res.cloudinary.com/tourx/image/upload/v1662577628/2204_w017_n001_443a_p30_443_ye0thy.jpg"})`,
+      // backgroundImage: `url(${"https://res.cloudinary.com/tourx/image/upload/v1662577628/2204_w017_n001_443a_p30_443_ye0thy.jpg"})`,
       backgroundPosition: "center",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
@@ -126,7 +126,10 @@ export default function Profile() {
           }}
         >
           <Card style={cardStyles.container}>
-            <Avatar sx={{ width: 56, height: 56 }}></Avatar>
+          <Avatar
+                          alt="Remy Sharp"
+                          src="https://res.cloudinary.com/tourx/image/upload/v1659808282/l_zm1kaj.png"
+                        />
             <Card.Body>
               <Card.Title className="text-center">
                  {details.firstName + " " + details.lastName}
@@ -182,7 +185,7 @@ export default function Profile() {
               </Modal>
             </Card.Body>
             <Card.Footer className="text-muted">
-              1 of 5 Admins of TourX
+              1 of 1 Admins of TourX
             </Card.Footer>
             {/* <div style={{ textAlign: "center" }}>
                 <GoogleLogin

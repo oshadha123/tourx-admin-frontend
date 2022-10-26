@@ -16,7 +16,6 @@ import {
 import Navigation from "../components/Navigation";
 import { BASE_URL } from "../config";
 import axios from "axios";
-import data from "./sampleRules";
 
 const tours = [
   { id: 1, name: "tour1", location: "Kandy", route: "route" },

@@ -13,37 +13,37 @@ import { BASE_URL } from ".././config";
 
 const UserData = [
   {
-    date: "01",
+    date: "21-10-2022",
     tourist: 10,
     tourguide: 6,
   },
   {
-    date: "02",
+    date: "22-10-2022",
     tourist: 15,
     tourguide: 3,
   },
   {
-    date: "03",
+    date: "23-10-2022",
     tourist: 7,
     tourguide: 4,
   },
   {
-    date: "04",
+    date: "24-10-2022",
     tourist: 11,
     tourguide: 8,
   },
   {
-    date: "05",
+    date: "25-10-2022",
     tourist: 20,
     tourguide: 10,
   },
   {
-    date: "06",
+    date: "26-10-2022",
     tourist: 22,
     tourguide: 7,
   },
   {
-    date: "07",
+    date: "27-10-2022",
     tourist: 18,
     tourguide: 5,
   },
