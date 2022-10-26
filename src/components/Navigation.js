@@ -9,6 +9,13 @@ import PersonIcon from "@material-ui/icons/Person";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
+
+export function logout(){
+  const navigate = useNavigate();
+  localStorage.clear();
+  navigate("/");
+}
 
 export default function Navigation() {
   return (
@@ -60,17 +67,9 @@ export default function Navigation() {
                   </Nav.Link>
                 </LinkContainer>
               </NavDropdown.Item>
-              {/* <NavDropdown.Item>
-                <LinkContainer to="/Settings">
-                  <Nav.Link>
-                    <SettingsIcon />
-                    Settings
-                  </Nav.Link>
-                </LinkContainer>
-              </NavDropdown.Item> */}
               <NavDropdown.Divider />
               <NavDropdown.Item href="#logout">
-                <ExitToAppIcon /> Log Out
+                <a href="/" style={{textDecoration:"none", color:"black"}}><ExitToAppIcon /> Log Out</a>
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

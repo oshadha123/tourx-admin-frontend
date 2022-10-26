@@ -16,7 +16,7 @@ import "../styles.css";
 function LoginForm() {
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
-  const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
   const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState("");
@@ -37,6 +37,7 @@ function LoginForm() {
       .then(async (res) => {
         localStorage.setItem("token", res.data.token);
         setSuccess(res.data.success);
+        localStorage.setItem("userId", res.data.userId);
 
         // if (res.data.success == 1) {
         //   setUserInfo(userInfo);

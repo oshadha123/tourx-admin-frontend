@@ -64,7 +64,7 @@ export default function Dashboard() {
   const [tourguideNum, setTourguideNum] = useState();
   const token = {
     headers: {
-      authorization: "Bearer " + localStorage.getItem("token")
+      authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
   axios
@@ -73,6 +73,17 @@ export default function Dashboard() {
       console.log(details);
       setTouristNum(details.data.data.tourist.length);
       setTourguideNum(details.data.data.tourguide.length);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+  axios
+    .get(`${BASE_URL}/stats/user/Reported`, token)
+    .then((reported) => {
+      console.log(reported);
+      // setTouristNum(details.data.data.tourist.length);
+      // setTourguideNum(details.data.data.tourguide.length);
     })
     .catch((e) => {
       console.log(e);
@@ -95,7 +106,7 @@ export default function Dashboard() {
   });
 
   const newRegData = {
-    labels:["Tourists", "Tour Guides"],
+    labels: ["Tourists", "Tour Guides"],
     datasets: [
       {
         label: ["Tourists", "Tour Guides"],
@@ -103,7 +114,7 @@ export default function Dashboard() {
         backgroundColor: ["#1768AC", "#ADE25D"],
       },
     ],
-  }
+  };
 
   const [typeData, setType] = useState({
     labels: TypeData.map((data) => data.type),
@@ -131,7 +142,7 @@ export default function Dashboard() {
                 <Card.Title>Created tours:</Card.Title>
                 <h2>30</h2>
               </div>
-              <a href="">
+              <a href="./TourManagement">
                 <Button variant="primary">Go to Tours</Button>
               </a>
             </Card.Body>
@@ -162,22 +173,23 @@ export default function Dashboard() {
         </div>
       </div>
 
-        <div className="d-flex flex-row mb-3">
-          <div className="p-2" style={{ textAlign: "center" }}>
-            <Card style={{ width: "18rem", margin: 10 }}>
-              <Card.Body>
-                <div>
-                  <Card.Title>Reported Users:</Card.Title>
-                  <h2>4</h2>
-                </div>
-                <a href="./UserManagement"><Button variant="danger">Go to User Management</Button></a>
-              </Card.Body>
-            </Card>
-          </div>
-          <div style={{ width: "20rem" }} className="p-2">
-            <h3 style={{ textAlign: "center" }}>User Composition</h3>
-            <Composition chartData={newRegData} />
-          </div>
+      <div className="d-flex flex-row mb-3">
+        <div className="p-2" style={{ textAlign: "center" }}>
+          <Card style={{ width: "18rem", margin: 10 }}>
+            <Card.Body>
+              <div>
+                <Card.Title>Reported Users:</Card.Title>
+                <h2>4</h2>
+              </div>
+              <a href="./UserManagement">
+                <Button variant="danger">Go to User Management</Button>
+              </a>
+            </Card.Body>
+          </Card>
+        </div>
+        <div style={{ width: "20rem" }} className="p-2">
+          <h3 style={{ textAlign: "center" }}>User Composition</h3>
+          <Composition chartData={newRegData} />
         </div>
       </div>
     </div>
