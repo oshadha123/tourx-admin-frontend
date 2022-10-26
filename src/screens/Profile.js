@@ -5,12 +5,89 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Avatar from "@mui/material/Avatar";
 import "../styles.css";
+import { BASE_URL } from "../config";
+import axios from "axios";
+import Navigation from "../components/Navigation";
 
 export default function Profile() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [details, setDetails] = useState({});
+  const token = {
+    headers: {
+      authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  axios
+    .get(`${BASE_URL}/profile`, token)
+    .then((res) => {
+      setDetails(res.data.data[0])
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+
+  // const update = (profilePicture, firstName, lastName, contactNumber, bio) => {
+  //   console.log(profilePicture);
+  //   console.log(firstName);
+  //   console.log(lastName);
+  //   console.log(contactNumber);
+  //   console.log(bio);
+
+  //   axios
+  //     .patch(
+  //       `${BASE_URL}/profile`,
+  //       {
+  //         change: {
+  //           profilePicture,
+  //           firstName,
+  //           lastName,
+  //           bio,
+  //         },
+  //       },
+  //       token,
+  //     )
+  //     .then(res => {
+  //       console.log(res.data);
+  //     })
+  //     .catch(e => {
+  //       console.log(`Updating error ${e}`);
+  //     });
+
+  //   if (userInfo.contact == null) {
+  //     axios
+  //       .post(
+  //         `${BASE_URL}/contact`,
+  //         {
+  //           contact: [contactNumber],
+  //         },
+  //         token,
+  //       )
+  //       .then(res => {
+  //         console.log(res.data);
+  //       })
+  //       .catch(e => {
+  //         console.log(`Updating error ${e}`);
+  //       });
+  //   } else {
+  //     axios
+  //       .patch(
+  //         `${BASE_URL}/contact`,
+  //         {
+  //           contact: [contactNumber],
+  //         },
+  //         token,
+  //       )
+  //       .then(res => {
+  //         console.log(res.data);
+  //       })
+  //       .catch(e => {
+  //         console.log(`Updating error ${e}`);
+  //       });
+  //   }
+  // };
 
   const styles = {
     container: {
@@ -36,6 +113,7 @@ export default function Profile() {
 
   return (
     <>
+    <Navigation/>	
       <div style={styles.container}>
         <div
           style={{
@@ -44,29 +122,22 @@ export default function Profile() {
             top: "50%",
             transform: "translate(-50%, -50%)",
             width: "25rem",
+            margin:"0",
           }}
         >
           <Card style={cardStyles.container}>
-            <Avatar sx={{ width: 56, height: 56 }}>VK</Avatar>
+            <Avatar sx={{ width: 56, height: 56 }}></Avatar>
             <Card.Body>
               <Card.Title className="text-center">
-                Venodi Widanagamage
+                 {details.firstName + " " + details.lastName}
               </Card.Title>
               <Card.Text>
                 <p>
-                  <b>Email : </b>venodiwidanagamage@gmail.com
+                  <b>Email : </b>htnaweenpasindu@gmail.com
                 </p>
                 <p>
-                  <b>Phone Number : </b>077 49 01 380
+                  <b>Phone Number : </b>{details.contact}
                 </p>
-                {/* <p>
-                  A motivated computer science undergraduate who is willing to
-                  contribute her maximum effort to the organization while being
-                  exposed to new technologies. A good team player with good
-                  social skills who likes to expand her network among industry
-                  individuals to gain valuable experience in a professional IT
-                  environment.
-                </p> */}
               </Card.Text>
 
               <div style={{ textAlign: "center" }}>
@@ -98,13 +169,6 @@ export default function Profile() {
                       <Form.Label>Phone Number</Form.Label>
                       <Form.Control as="textarea" rows={1} />
                     </Form.Group>
-                    {/* <Form.Group
-                      className="mb-3"
-                      controlId="exampleForm.ControlTextarea1"
-                    >
-                      <Form.Label>Bio</Form.Label>
-                      <Form.Control as="textarea" rows={5} />
-                    </Form.Group> */}
                   </Form>
                 </Modal.Body>
                 <Modal.Footer>

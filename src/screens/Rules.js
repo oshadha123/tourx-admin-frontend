@@ -1,51 +1,74 @@
 import React, { useState } from "react";
 import "../styles.css";
+import {
+  Container,
+  Col,
+  Row,
+  Tab,
+  Card,
+  Button,
+  Nav,
+  NavLink,
+  NavItem,
+  TabContent,
+  TabPane,
+} from "react-bootstrap";
 import Navigation from "../components/Navigation";
-import Col from "react-bootstrap/Col";
-import Nav from "react-bootstrap/Nav";
-import Row from "react-bootstrap/Row";
-import Tab from "react-bootstrap/Tab";
-import Button from "react-bootstrap/Button";
+import { BASE_URL } from "../config";
+import axios from "axios";
 
 const tours = [
-  {
-    id: 1,
-    name: "Seasons rule",
-    start: "2022-08-09",
-    end: "2022-11-01",
-  },
-  {
-    id: 2,
-    name: "Premium price",
-    start: "2022-06-01",
-    end: "2023-01-01",
-  },
+  { id: 1, name: "tour1", location: "Kandy", route: "route" },
+  { id: 2, name: "tour2", location: "Colombo", route: "route" },
+  { id: 3, name: "tour3", location: "Anuradhapura", route: "route" },
+  { id: 4, name: "tour4", location: "Galle", route: "route" },
 ];
 
 export default function Rules() {
+  const [rules, setRules] = useState([]);
+  const [selected, setSelected] = useState();
+  <Navigation />;
+  const token = {
+    headers: {
+      authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  axios
+    .get(`${BASE_URL}/rule/types`, token)
+    .then((details) => {
+      setRules(details.data.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  // console.log(rules);
   return (
-    <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-      <Row>
-        <Col sm={3}>
-          <Nav variant="pills" className="flex-column">
-            {tours.map((tour) => (
-              <Nav.Item>
-                <Nav.Link eventKey={tour.id}>{tour.name}</Nav.Link>
-              </Nav.Item>
-            ))}
-          </Nav>
-        </Col>
-        <Col sm={9}>
-          <Tab.Content>
-            <Tab.Pane eventKey="1">
-              <p>{tours[0].name}</p>
-              <p>{tours[0].start}</p>
-              <p>{tours[0].end}</p>
-<Button>Edit</Button>
-            </Tab.Pane>
-          </Tab.Content>
-        </Col>
-      </Row>
-    </Tab.Container>
+    <>
+      <div className="App">
+        <Navigation />
+        <Container
+          id="left-tabs-example"
+          defaultActiveKey="first"
+          className="mt-5"
+        >
+          <Row>
+            <Col sm={3}>
+              <Nav variant="pills" className="flex-column">
+                {rules.map((e) => (
+                  <NavItem style={{ height: "5rem" }} onClick={()=> setSelected(e.ruleId)}>
+                    <NavLink eventKey={e.ruleId}>{e.ruleName}</NavLink>
+                  </NavItem>
+                ))}
+              </Nav>
+            </Col>
+            <Col sm={9} style={{ backgroundColor:"#eef3f7", borderRadius:"8px"}}>
+              <TabContent>
+                {selected}
+              </TabContent>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </>
   );
 }

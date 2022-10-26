@@ -55,7 +55,6 @@ function TourManagement() {
     setFilter(event.target.value);
   };
   // const Search = () => {
-
   let dataSearch = data.cardData.filter((item) => {
     return Object.keys(item).some((key) =>
       item[key]
@@ -68,12 +67,12 @@ function TourManagement() {
   var count = 0;
   return (
     <>
-    <Navigation/>
+      <Navigation />
       <section className="py-4 container">
         <div className="row justify-content-center">
           <div className="col-12 mb-0">
             <div className="mb-3 col-4 mx-auto text-center">
-              <h4 className="form-label h4">Search for Events</h4>
+              <h4 className="form-label h4">Search for Tours</h4>
               <input
                 type="text"
                 className="form-control"
@@ -100,7 +99,7 @@ function TourManagement() {
                     }}
                     className="shadow"
                   >
-                    <Card.Img variant="top" src={item.img} />
+                    <Card.Img variant="top" src={item.img} style={{maxHeight:"50%"}} />
                     <Card.Body>
                       <Card.Title>{item.title}</Card.Title>
                       <Card.Text className="overflow-hidden">
@@ -128,15 +127,31 @@ function TourManagement() {
                         key={item.id}
                       >
                         <Modal.Header closeButton>
-                        {console.log(item.title)}
-                          <Modal.Title>{item.title}</Modal.Title>
+                          {console.log(item.title)}
+                          <Modal.Title>Mirissa Breeze</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <p> <b>Attraction Places : </b> Gregory lake, Haggala Gardens </p>
-                          <p> <b>Cost per head : </b> LKR 8500 </p>
-                          <p> <b>Duration : </b> 2 Days, 1 Night </p>
-                          <p> <b>Traveeling modes : </b> By bus, By bicycles </p>
-                          <p> <b>Attraction Places : </b> Gregory lake, Haggala Gardens </p>
+                          <p>
+                            {" "}
+                            <b>Attraction Places : </b> Waterfalls, hiking paths{" "}
+                          </p>
+                          <p>
+                            {" "}
+                            <b>Cost per head : </b> LKR 8500{" "}
+                          </p>
+                          <p>
+                            {" "}
+                            <b>Duration : </b> 2 Days, 1 Night{" "}
+                          </p>
+                          <p>
+                            {" "}
+                            <b>Traveeling modes : </b> By bus, By bicycles{" "}
+                          </p>
+                          <p>
+                            {" "}
+                            <b>Attraction Places : </b> Gregory lake, Haggala
+                            Gardens{" "}
+                          </p>
                         </Modal.Body>
                         <Modal.Footer>
                           <Button variant="success" onClick={handleClose}>
