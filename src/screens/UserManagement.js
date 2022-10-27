@@ -22,7 +22,7 @@ export default function UserManagement() {
     // setSelected(userid);
     showModel();
   }
-  console.log(selected);
+  // console.log(selected);
 
   var count = 1;
   const token = {
@@ -30,14 +30,12 @@ export default function UserManagement() {
       authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
-
-  // get all users
   useEffect(() => {
     axios
       .get(`${BASE_URL}/user/reported/all`, token)
       .then((details) => {
-        // console.log(details);
         setUsers(details.data.data[0]);
+        console.log(details);
       })
 
       .catch((e) => {
@@ -47,25 +45,33 @@ export default function UserManagement() {
 
   // view only selected user
 
-  // const showModel = () => {
-  // useEffect(() => {
   axios
     .get(`${BASE_URL}/user/reported/${selected}`, token)
     .then((details) => {
-      console.log(details);
       setReports(details.data.data);
     })
 
     .catch((e) => {
       console.log(e);
     });
-  // }, []);
-  // }
+
+  axios
+    .post(`${BASE_URL}/user/banned`,       {selected
+    , token })
+    .then((details) => {
+      console.log(details);
+    })
+
+    .catch((e) => {
+      console.log(e);
+    });
 
   const renderTable = () => {
     // return users.map(user => {
     return (
-      <tr key={users["userId"]}>
+      <tr 
+      key={users["userId"]}
+      >
         <td>{count}</td>
         <td>{users["firstName"]}</td>
         <td>{users["lastName"]}</td>
@@ -111,15 +117,17 @@ export default function UserManagement() {
               </ol>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="success" onClick={handleClose}>
-                Accept
+              <Button variant="primary" onClick={handleClose}>
+                Close
               </Button>
-              <Button variant="danger">Reject</Button>
             </Modal.Footer>
           </Modal>
         </td>
         <td>
-          <Button onClick={handleShowRemove}>
+          <Button
+            onClick={handleShowRemove}
+            style={{ backgroundColor: "transparent", outline: "none" }}
+          >
             <DeleteIcon style={{ color: "e26d5c" }} />
           </Button>
           <Modal
@@ -128,21 +136,31 @@ export default function UserManagement() {
             backdrop="static"
             keyboard={false}
             centered
-            style={{height:"10rem"}}
+            style={{ height: "15rem" }}
           >
+            <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
               Are you sure you want to ban this user from TourX?
             </Modal.Body>
-            <div style={{display:"flex"}}>
-            <Modal.Footer>
-            <Button variant="primary">Cancel</Button>
-            <Button variant="danger">Remove</Button>
-            </Modal.Footer>
-            </div>
+           <Modal.Footer>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    handleCloseRemove();
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    handleCloseRemove();
+                  }}
+                >
+                  Remove
+                </Button>
+              </Modal.Footer>
           </Modal>
-        </td>
-        <td>
-          <CheckCircleIcon style={{ color: "#ade25d" }} />
         </td>
       </tr>
     );
@@ -160,7 +178,6 @@ export default function UserManagement() {
             <th>Last Name</th>
             <th>Reports</th>
             <th>Remove User</th>
-            <th>Ignore</th>
           </tr>
 
           {renderTable()}

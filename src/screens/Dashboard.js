@@ -10,6 +10,7 @@ import UserType from "../components/AccountType";
 import Navigation from "../components/Navigation";
 import axios from "axios";
 import { BASE_URL } from ".././config";
+import { Doughnut } from "react-chartjs-2";
 
 const UserData = [
   {
@@ -49,17 +50,12 @@ const UserData = [
   },
 ];
 
-const RegData = [
-  { type: "Tourists", num: 130 },
-  { type: "Tour Guides", num: 20 },
-];
-
-const TypeData = [
-  { type: "Regular", num: 15 },
-  { type: "Premium", num: 5 },
-];
-
 export default function Dashboard() {
+  const [touristData, setTouristData] = useState([]);
+  const [tourguideData, setTourguideData] = useState([]);
+  const [tours, setTours] = useState(8);
+  const [premium, setPremium] = useState(0);
+  const [nonPremium, setNonPremium] = useState(0);
   const [touristNum, setTouristNum] = useState();
   const [tourguideNum, setTourguideNum] = useState();
   const token = {
@@ -67,27 +63,57 @@ export default function Dashboard() {
       authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
-  axios
-    .get(`${BASE_URL}/stats/userRegistration`, token)
-    .then((details) => {
-      console.log(details);
-      setTouristNum(details.data.data.tourist.length);
-      setTourguideNum(details.data.data.tourguide.length);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/stats/userRegistration`, token)
+      .then((details) => {
+        // console.log(details);
+        // setTouristData(details.data.data.tourist);
+        // setTourguideData(details.data.data.tourguide);
+        setTouristNum(details.data.data.tourist.length);
+        setTourguideNum(details.data.data.tourguide.length);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
 
-  axios
-    .get(`${BASE_URL}/stats/user/Reported`, token)
-    .then((reported) => {
-      console.log(reported);
-      // setTouristNum(details.data.data.tourist.length);
-      // setTourguideNum(details.data.data.tourguide.length);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/stats/user/Reported`, token)
+      .then((reported) => {
+        console.log(reported);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/stats/tour`, token)
+      .then((tour) => {
+        // console.log(tour);
+        setTours(tour.data.data.new);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/stats/user/accountType`, token)
+      .then((e) => {
+        // console.log(e);
+        setPremium(e.data.data["Premium"]);
+        setNonPremium(e.data.data["NonPremium"]);
+        console.log(premium);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
 
   const [userData, setUserData] = useState({
     labels: UserData.map((data) => data.date),
@@ -105,6 +131,36 @@ export default function Dashboard() {
     ],
   });
 
+  const Touristdata = {
+    labels: ["21st", "22nd", "23rd", "24th", "25th", "26th", "27th"],
+    datasets: [
+      {
+        label: "Tourists",
+        fill: false,
+        lineTension: 0.1,
+        borderColor: "#E26D5C",
+        pointBorderColor: "#E26D5C",
+        pointRadius: 1,
+        data: [1, 2, 0, 1, 1, 0, 1],
+      },
+    ],
+  };
+
+  const TourguideData = {
+    labels: ["21st", "22nd", "23rd", "24th", "25th", "26th", "27th"],
+    datasets: [
+      {
+        label: "Tour Guides",
+        fill: false,
+        lineTension: 0.1,
+        borderColor: "#1768AC",
+        pointBorderColor: "#1768AC",
+        pointRadius: 1,
+        data: [0, 1, 0, 2, 0, 0, 1],
+      },
+    ],
+  };
+
   const newRegData = {
     labels: ["Tourists", "Tour Guides"],
     datasets: [
@@ -117,11 +173,11 @@ export default function Dashboard() {
   };
 
   const [typeData, setType] = useState({
-    labels: TypeData.map((data) => data.type),
+    labels: ["Non-premium", "Premium"],
     datasets: [
       {
-        label: ["Regular", "Premium"],
-        data: TypeData.map((data) => data.num),
+        label: ["Non-premium", "Premium"],
+        data: [2, 2],
         backgroundColor: ["#1768AC", "#06BEE1"],
       },
     ],
@@ -132,15 +188,12 @@ export default function Dashboard() {
       <Navigation />
       <div className="d-flex flex-row mb-3">
         <div style={{ textAlign: "center" }} className="p-2">
-          <Card style={{ margin: 10 }}>
-            <Card.Body>
+          <Card style={{ margin: 10, height:"12rem" , }}>
+            <Card.Body style={{alignItems:"center"}}>
               <div>
+                <br></br>
                 <Card.Title>Pending tours:</Card.Title>
-                <h2>16</h2>
-              </div>
-              <div>
-                <Card.Title>Created tours:</Card.Title>
-                <h2>30</h2>
+                <h2>{tours}</h2>
               </div>
               <a href="./TourManagement">
                 <Button variant="primary">Go to Tours</Button>
@@ -148,38 +201,12 @@ export default function Dashboard() {
             </Card.Body>
           </Card>
 
-          <Card style={{ width: "18rem", margin: 10 }}>
+          
+          <Card style={{ width: "18rem", margin: 10 , height:"12rem" }}>
             <Card.Body>
-              <div style={{ textAlign: "center" }}>
-                <Card.Title>
-                  Virtual tour to site visitation conversion rate:{" "}
-                </Card.Title>
-                <h2>
-                  38% <ArrowUpwardIcon style={{ color: "#a4eb34" }} />
-                </h2>
-              </div>
-            </Card.Body>
-          </Card>
-        </div>
-
-        <div className="p-2">
-          <h3 style={{ textAlign: "center" }}>Tour Guide Account Types</h3>
-          <UserType chartData={typeData} />
-        </div>
-
-        <div style={{ width: "40rem" }} className="p-2">
-          <h3 style={{ textAlign: "center" }}>Daily Registrations</h3>
-          <Registrations chartData={userData} />
-        </div>
-      </div>
-
-      <div className="d-flex flex-row mb-3">
-        <div className="p-2" style={{ textAlign: "center" }}>
-          <Card style={{ width: "18rem", margin: 10 }}>
-            <Card.Body>
-              <div>
+              <div><br></br>
                 <Card.Title>Reported Users:</Card.Title>
-                <h2>4</h2>
+                <h2>1</h2>
               </div>
               <a href="./UserManagement">
                 <Button variant="danger">Go to User Management</Button>
@@ -187,9 +214,22 @@ export default function Dashboard() {
             </Card.Body>
           </Card>
         </div>
-        <div style={{ width: "20rem" }} className="p-2">
-          <h3 style={{ textAlign: "center" }}>User Composition</h3>
-          <Composition chartData={newRegData} />
+
+        <div className="d-flex flex-column mb-3">
+          <div className="p-2">
+            <h3 style={{ textAlign: "center" }}>Tour Guide Account Types</h3>
+            <UserType chartData={typeData} />
+          </div>
+          <div style={{ width: "20rem" }} className="p-2">
+            <h3 style={{ textAlign: "center" }}>User Composition</h3>
+            <Composition chartData={newRegData} />
+          </div>
+        </div>
+
+        <div style={{ width: "40rem" }} className="p-2">
+          <h3 style={{ textAlign: "center" }}>Daily Registrations</h3>
+          <Registrations chartData={TourguideData} />
+          <Registrations chartData={Touristdata} />
         </div>
       </div>
     </div>
